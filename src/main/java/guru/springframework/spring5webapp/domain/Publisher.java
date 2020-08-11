@@ -1,9 +1,8 @@
 package guru.springframework.spring5webapp.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Publisher {
@@ -18,6 +17,10 @@ public class Publisher {
     private String state;
     private String zip;
 
+    @OneToMany // One publisher can publish many books
+    @JoinColumn(name = "publisher_id") // add publisher_id to the book record to track the publisher (for Hibernate)
+    private Set<Book> books = new HashSet<>(); // initialize as empty HashSet to avoid NullPointer Exception at runtime
+
     // Zero argument constructor for JPA
     public Publisher() {
     }
@@ -28,6 +31,14 @@ public class Publisher {
         this.city = city;
         this.state = state;
         this.zip = zip;
+    }
+
+    public Set<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(Set<Book> books) {
+        this.books = books;
     }
 
     public String getName() {
