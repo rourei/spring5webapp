@@ -22,6 +22,6 @@ public class BookController {
 
         model.addAttribute("books", bookRepository.findAll()); // add a list of all books to the model
 
-        return "books"; // return the "view type"
+        return "books/list"; // return the "view type" specified in the templates.book directory
     }
 }
